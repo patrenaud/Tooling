@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 87dec8cd7abc08549aab9e944f5ac817
+timeCreated: 1528223930
+licenseType: Pro
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - m_Blue: {fileID: 2800000, guid: d585822382a66804a9860af4870c4022, type: 3}
+  - m_Green: {instanceID: 0}
+  - m_Purple: {instanceID: 0}
+  - m_White: {instanceID: 0}
+  - m_Red: {instanceID: 0}
+  - m_LeftButtonTexture: {instanceID: 0}
+  - m_RightButtonTexture: {instanceID: 0}
+  - m_Player: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
