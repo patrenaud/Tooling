@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2017
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TP2_PR", "TP2_PR.csproj", "{0C464F9A-06E1-B701-591A-DBE85B04E36B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TP2_PR.Editor", "TP2_PR.Editor.csproj", "{CAFA4A4E-511D-918A-733F-2C5C8D10A840}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0C464F9A-06E1-B701-591A-DBE85B04E36B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C464F9A-06E1-B701-591A-DBE85B04E36B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C464F9A-06E1-B701-591A-DBE85B04E36B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C464F9A-06E1-B701-591A-DBE85B04E36B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CAFA4A4E-511D-918A-733F-2C5C8D10A840}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAFA4A4E-511D-918A-733F-2C5C8D10A840}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CAFA4A4E-511D-918A-733F-2C5C8D10A840}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CAFA4A4E-511D-918A-733F-2C5C8D10A840}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

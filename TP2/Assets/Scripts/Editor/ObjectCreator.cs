@@ -23,7 +23,7 @@ public class ObjectCreator : EditorWindow
 
     private Transform m_Transform;
     private GameObject m_CustomObject;
-    private GameObject m_Object = new GameObject();
+
     private List<GameObject> m_ObjectList = new List<GameObject>();
 
     private int m_NbToCreate;
@@ -35,11 +35,8 @@ public class ObjectCreator : EditorWindow
 
     private string m_Name;
     private string m_Type;
-    private string[] m_PrimitiveTypes = new string[3] { "Cube", "Sphere", "Plane" };
 
-
-
-    [MenuItem("Tools/ObjectCreator")]
+    [MenuItem("Toolings/ObjectCreator")]
     private static void Init()
     {
         ObjectCreator script = GetWindow<ObjectCreator>();
@@ -48,6 +45,7 @@ public class ObjectCreator : EditorWindow
 
     private void OnGUI()
     {
+        EditorGUILayout.LabelField("Caliss", EditorStyles.centeredGreyMiniLabel);
         ShowPosition();
         ShowObjectSelection();
         ShowCreationParameters();
@@ -80,7 +78,7 @@ public class ObjectCreator : EditorWindow
         if (GUILayout.Button("Select custom object"))
         {
             m_CustomObject = (GameObject)EditorGUILayout.ObjectField("Object: ", m_CustomObject, typeof(GameObject), true);
-            //m_Object = m_CustomObject;
+           
         }
         else
         {
@@ -130,7 +128,7 @@ public class ObjectCreator : EditorWindow
             m_UseLocalRotation = EditorGUILayout.Toggle("Use local rotation? ", m_UseLocalRotation);
             if (m_UseLocalRotation)
             {
-                m_Object.transform.rotation = m_Transform.rotation;
+               // m_Object.transform.rotation = m_Transform.rotation;
             }
         }
     }
@@ -139,8 +137,8 @@ public class ObjectCreator : EditorWindow
     {
         if (GUILayout.Button("Create Object"))
         {
-            for (int i = 0; i < m_NbToCreate; i++)
-            m_ObjectList[i] = Instantiate(m_Object, m_Transform.position * i , Quaternion.identity);
+            //for (int i = 0; i < m_NbToCreate; i++)
+           // m_ObjectList[i] = Instantiate(m_Object, m_Transform.position * i , Quaternion.identity);
         }
 
     }
