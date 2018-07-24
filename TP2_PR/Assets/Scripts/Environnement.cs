@@ -9,6 +9,17 @@ public class Environnement : MonoBehaviour
     [SerializeField]
     private bool m_Bounds;
     [SerializeField]
-    private Color m_Color;
+    private Color m_Color = Color.white;
 
+    private void OnDrawGizmosSelected()
+    {
+        if (m_Bounds)
+        {
+            if (m_Color != null)
+            {
+                Gizmos.color = m_Color;
+            }
+            Gizmos.DrawWireCube(transform.position, transform.localScale);
+        }
+    }
 }

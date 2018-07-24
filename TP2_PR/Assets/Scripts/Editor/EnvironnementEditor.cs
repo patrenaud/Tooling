@@ -31,9 +31,7 @@ public class EnvironnementEditor : Editor
         ShowRotation();
         ShowScale();
         ShowOther();
-
-        ShowGuizmos();
-
+        
         DrawPropertiesExcluding(serializedObject, "m_Health");
 
         serializedObject.ApplyModifiedProperties(); // Accepte que des changements peuvent se faire dans l'éditeur
@@ -51,6 +49,7 @@ public class EnvironnementEditor : Editor
         if (GUILayout.Button("Random Offset"))
         {
             m_RandomOffset = Random.Range(m_MinOffset, m_MaxOffset);
+            m_Environnement.transform.position += new Vector3(m_RandomOffset, m_RandomOffset, m_RandomOffset);
         }
         GUI.color = Color.white;
         EditorGUILayout.EndVertical();
@@ -68,6 +67,7 @@ public class EnvironnementEditor : Editor
         if (GUILayout.Button("Random Rotation"))
         { 
             m_RandomRotation = Random.Range(m_MinRotation, m_MaxRotation);
+            m_Environnement.transform.rotation = Quaternion.Euler(m_RandomRotation, m_RandomRotation, m_RandomRotation);
         }
         GUI.color = Color.white;
         EditorGUILayout.EndVertical();
@@ -85,21 +85,17 @@ public class EnvironnementEditor : Editor
         if (GUILayout.Button("Random Scale"))
         {
             m_RandomScale = Random.Range(m_MinScale, m_MaxScale);
-            
+            m_Environnement.transform.localScale = new Vector3(m_RandomScale, m_RandomScale, m_RandomScale);
         }
+        
         GUI.color = Color.white;
         EditorGUILayout.EndVertical();
     }
 
     private void ShowOther()
     {
-        SerializedProperty health = serializedObject.FindProperty("m_Health");        
-        health.intValue = EditorGUILayout.IntSlider("Health", health.intValue, 0, 100);        
-
+        SerializedProperty health = serializedObject.FindProperty("m_Health");
+        health.intValue = EditorGUILayout.IntSlider("Health", health.intValue, 0, 100);
     }
 
-    private void ShowGuizmos()
-    {
-
-    }
 }

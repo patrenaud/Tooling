@@ -46,8 +46,6 @@ public class ObjectCreator : EditorWindow
 
     private void OnGUI()
     {
-
-
         ShowPosition();
         ShowObjectSelection();
         ShowCreationParameters();
@@ -69,7 +67,7 @@ public class ObjectCreator : EditorWindow
             EditorGUILayout.LabelField(m_Transform.transform.position.ToString(), EditorStyles.centeredGreyMiniLabel);
         }
         // Cette variable représente la position de départ de l'objet
-        m_Transform = (Transform)EditorGUILayout.ObjectField("Transform: ", m_Transform, typeof(Transform), true); // **********
+        m_Transform = (Transform)EditorGUILayout.ObjectField("Transform: ", m_Transform, typeof(Transform), true);
         EditorGUILayout.EndVertical();
     }
 
@@ -92,14 +90,18 @@ public class ObjectCreator : EditorWindow
         EditorGUILayout.LabelField("Creation Parameters", EditorStyles.centeredGreyMiniLabel);
 
         // Represente le nom de l'objet
-        m_Name = EditorGUILayout.TextField("Name: ", m_Name); // ***************
+        m_Name = EditorGUILayout.TextField("Name: ", m_Name);
+        if (m_Name == "")
+        {
+            m_Name = "Chosse something plz";
+        }
 
         // Creation de 2 field pour la couleur de départ et de fin
         m_UseColorToggle = EditorGUILayout.Toggle("UseColor? ", m_UseColorToggle);
         if (m_UseColorToggle)
         {
             m_StartingColor = EditorGUILayout.ColorField("Starting Color: ", m_StartingColor);
-            m_EndColor = EditorGUILayout.ColorField("Starting Color: ", m_EndColor);
+            m_EndColor = EditorGUILayout.ColorField("End Color: ", m_EndColor);
         }
         else
         {
@@ -108,20 +110,20 @@ public class ObjectCreator : EditorWindow
         }
 
         // Variable pour le nombre d'objets à instanciés
-        m_NbToCreate = EditorGUILayout.IntField("Nb to create: ", m_NbToCreate); // ********
+        m_NbToCreate = EditorGUILayout.IntField("Nb to create: ", m_NbToCreate);
 
         // Variable pour la distance entre les objets
-        m_Spacing = EditorGUILayout.IntField("Spacing: ", m_Spacing); // *******
+        m_Spacing = EditorGUILayout.IntField("Spacing: ", m_Spacing);
 
 
-        m_Direction = (Direction)EditorGUILayout.EnumPopup("Axis Direction: ", m_Direction); // *******
+        m_Direction = (Direction)EditorGUILayout.EnumPopup("Axis Direction: ", m_Direction);
         GetDirection();
 
         m_AutoCenter = EditorGUILayout.Toggle("Auto-Center? ", m_AutoCenter); // TO DO
 
         if (m_Transform)
         {
-            m_UseLocalRotation = EditorGUILayout.Toggle("Use local rotation? ", m_UseLocalRotation); // TO DO
+            m_UseLocalRotation = EditorGUILayout.Toggle("Use local rotation? ", m_UseLocalRotation);
         }
         EditorGUILayout.EndVertical();
     }
@@ -131,12 +133,15 @@ public class ObjectCreator : EditorWindow
         EditorGUILayout.BeginVertical(GUI.skin.box);
         if (GUILayout.Button("Create Object"))
         {
+            GameObject parent = new GameObject(); // Here is the parent for all gameObjects created
+            Undo.RegisterCreatedObjectUndo(parent, "Parent"); // To add the ctrl-Z feature
             m_ObjectList.Clear();
             for (int i = 0; i < m_NbToCreate; i++)
             {
                 if (m_CustomObject == null)
                 {
                     m_ObjectList.Add(GameObject.CreatePrimitive(m_PrimitiveType));
+                    m_ObjectList[i].transform.SetParent(parent.transform); // This is to add in parent
 
                     if (m_Transform == null)
                     {
@@ -167,6 +172,7 @@ public class ObjectCreator : EditorWindow
                     if (m_Transform == null)
                     {
                         m_ObjectList.Add(Instantiate(m_CustomObject, m_StartingPos, Quaternion.identity));
+                        m_ObjectList[i].transform.SetParent(parent.transform); // This is to add in parent
                         if (m_UseLocalRotation)
                         {
                             m_ObjectList[i].transform.position = m_StartingPos + i * GetDirection() * m_Spacing;
@@ -179,6 +185,7 @@ public class ObjectCreator : EditorWindow
                     else
                     {
                         m_ObjectList.Add(Instantiate(m_CustomObject, m_Transform.position, Quaternion.identity));
+                        m_ObjectList[i].transform.SetParent(parent.transform);
                         if (m_UseLocalRotation)
                         {
                             m_ObjectList[i].transform.position = m_StartingPos + i * GetDirection() * m_Spacing;
@@ -189,8 +196,13 @@ public class ObjectCreator : EditorWindow
                         }
                     }
                 }
-                m_ObjectList[i].name = m_Name;
-                m_ObjectList[i].AddComponent<Environnement>();
+                m_ObjectList[i].name = m_Name; // To add the name of the gameobject
+                m_ObjectList[i].AddComponent<Environnement>(); // To add the Environnement script
+
+                Renderer rend = m_ObjectList[i].GetComponent<Renderer>();
+                Material mat = new Material(rend.sharedMaterial);
+                mat.color = Color.Lerp(m_StartingColor, m_EndColor, i / (float)m_NbToCreate);
+                rend.sharedMaterial = mat;
             }
         }
         EditorGUILayout.EndVertical();
